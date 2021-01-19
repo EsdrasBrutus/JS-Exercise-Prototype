@@ -39,8 +39,25 @@ function Airplane(name) {
           + It should return a string with `name` and `age`. Example: "Mary, 50"
   */
   
- function Person() {
+ function Person(attr, Age) {
+  this.name = attr;
+  this.age = Age;
+  this.stomach = [] 
+  }
+
+  Person.prototype.eat = function(someFood){
+    if(this.stomach.length < 10){
+      this.stomach.push(someFood)
+    }
+  }
+  
+  Person.prototype.poop = function(){
+    this.stomach = []
+  }
     
+      
+  Person.prototype.toString = function(){
+    return `${this.name}, ${this.age}`
   }
  
  
@@ -63,8 +80,27 @@ function Airplane(name) {
           + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
   */
   
- function Car() {
-    
+ function Car(attr, miles) {
+  this.model = attr;
+  this.milesPerGallon = miles;
+  this.tank = 0;
+  this.odometer = 0;
+  }
+
+  Car.prototype.fill = function(gallons){
+    this.tank += gallons
+  }
+  
+  Car.prototype.drive = function(distance){
+    if (this.tank > 0){
+      this.odometer +=distance;
+      this.tank -= Math.floor(distance/this.milesPerGallon)
+    }
+    else{
+      this.tank = 0
+      log(`I ran out of fuel at ${this.odometer} miles!`)
+      return `I ran out of fuel at ${this.odometer} miles!`
+    }
   }
   
   
@@ -75,18 +111,23 @@ function Airplane(name) {
       - Besides the methods on Person.prototype, babies have the ability to `.play()`:
           + Should return a string "Playing with x", x being the favorite toy.
   */
- function Baby() {
-   
+ function Baby(babyattr, babyage, babytoy) {
+  Person.call(this, babyattr, babyage, babytoy); 
+  this.favoriteToy = babytoy;
   }
- 
+  Baby.prototype = Object.create(Person.prototype);
+
+  Baby.prototype.play = function(toy){
+    return `Playing with ${this.favoriteToy}`
+  }
   
   /* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
-    1. 
-    2. 
-    3. 
-    4. 
+    1. when the this keyword is used in global scope, the value of it is always the window/console Object.
+    2. this is whatever the object before the dot is.
+    3. this refers to the specific instance of the constructor function that is created.
+    4. this is explictly defined whenever we use the Javascript's call or apply method.
   */
   
   
